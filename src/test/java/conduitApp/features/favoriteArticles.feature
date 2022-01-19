@@ -23,8 +23,7 @@ Feature: Favorite articles
         When method Post
         Then status 200
 
-
-        # # Step 4: Verificar el esquema de respuesta
+        # Step 4: Verificar el esquema de respuesta
         * def timevalidator = read('classpath:helpers/timeValidator.js')
         And match response.article ==
             """

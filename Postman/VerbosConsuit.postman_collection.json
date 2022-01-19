@@ -1,0 +1,1143 @@
+{
+	"info": {
+		"_postman_id": "d2b10157-e0df-43d9-8641-ffb6762a0d8f",
+		"name": "VerbosConsuit",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get",
+			"item": [
+				{
+					"name": "ArticuloSaitama",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var CREATED = pm.environment.get('CREATED');\r",
+									"if (CREATED === 'true'){\r",
+									"    pm.test(\"CheckSLUG\", function(){\r",
+									"    var response = pm.response.json();\r",
+									"    pm.expect(response.article.slug).to.eql('Porque-Saitama-es-tan-Boss-9261');\r",
+									"});  \r",
+									"} else {\r",
+									"    pm.test(\"CheckDESCRIPTION\", function(){\r",
+									"    var response = pm.response.json();\r",
+									"    pm.expect(response.article.description).to.eql('El inmeso poder de Saitama');\r",
+									"});  \r",
+									"}\r",
+									"\r",
+									"// Comprobar status\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Comprobar texto en el JSON\r",
+									"pm.test(\"ChekTITLE\", function(){\r",
+									"    var response = pm.response.json();\r",
+									"    pm.expect(response.article.title).to.eql('¿Porque Saitama es tan Boss?');\r",
+									"});\r",
+									"\r",
+									"// Comprobar si el codigo es un String\r",
+									"pm.test(\"Body is correct\", function () {\r",
+									"    pm.response.to.have.body(\"response_body_string\");\r",
+									"});\r",
+									"\r",
+									"// Comprobar si el codigo es un Json\r",
+									"pm.test(\"Your test name\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"});\r",
+									"\r",
+									"// Muestra el tiempo de respuesta del servior\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Url}}{{Slug}}",
+							"host": [
+								"{{Url}}{{Slug}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PerfilRoverto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.responseTime < 150){\r",
+									"    // Comprobar texto en el JSON\r",
+									"pm.test(\"CheckUSERNAME\", function(){\r",
+									"    var response = pm.response.json();\r",
+									"    pm.expect(response.profile.username).to.eql('roverto');\r",
+									"});  \r",
+									"} else {\r",
+									"   // Comprobar texto en el JSON\r",
+									"pm.test(\"CheckFOLLOWING\", function(){\r",
+									"    var response = pm.response.json();\r",
+									"    pm.expect(response.profile.following).to.eql(false);\r",
+									"});  \r",
+									"}\r",
+									"\r",
+									"// Comprobar status\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Comprueba cualquier de los estados que se le asignen al array\r",
+									"pm.test(\"Check\", function(){\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,201,404]);\r",
+									"});\r",
+									"\r",
+									"// Comprobar texto en el JSON\r",
+									"pm.test(\"CheckUsername\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.profile.username).to.eql('roverto');\r",
+									"    pm.expect(jsonData.profile.bio).to.eql(null);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"Created\");\r",
+									"});\r",
+									"\r",
+									"// Par mirar si tiene cookies\r",
+									"pm.test(\"Cookie JSESSIONID is present\", () => {\r",
+									"  pm.expect(pm.cookies.has('JSESSIONID')).to.be.true;\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Url}}/api/profiles/roverto",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"api",
+								"profiles",
+								"roverto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ArticuloCreateanewimplementation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Url}}/articles?limit=10&offset=0",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"articles"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SlugAutmatico",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Url}}/api/articles/{{slug}}",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"api",
+								"articles",
+								"{{slug}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validacion articulo favorito",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var schema =\r",
+									"{\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"article\": {\r",
+									"      \"type\": \"object\",\r",
+									"      \"properties\": {\r",
+									"        \"title\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"slug\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"body\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"description\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"createdAt\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"updatedAt\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"tagList\": {\r",
+									"          \"type\": \"array\"\r",
+									"        },\r",
+									"        \"favoritesCount\": {\r",
+									"          \"type\": \"integer\"\r",
+									"        },\r",
+									"        \"favorited\": {\r",
+									"          \"type\": \"boolean\"\r",
+									"        },\r",
+									"        \"author\": {\r",
+									"          \"type\": \"object\",\r",
+									"          \"properties\": {\r",
+									"            \"username\": {\r",
+									"              \"type\": \"string\"\r",
+									"            },\r",
+									"            \"bio\": {\r",
+									"              \"type\": \"null\"\r",
+									"            },\r",
+									"            \"image\": {\r",
+									"              \"type\": \"string\"\r",
+									"            },\r",
+									"            \"followedBy\": {\r",
+									"              \"type\": \"array\",\r",
+									"              \"items\": {}\r",
+									"            },\r",
+									"            \"following\": {\r",
+									"              \"type\": \"boolean\"\r",
+									"            }\r",
+									"          },\r",
+									"          \"required\": [\r",
+									"            \"username\",\r",
+									"            \"bio\",\r",
+									"            \"image\",\r",
+									"            \"followedBy\",\r",
+									"            \"following\"\r",
+									"          ]\r",
+									"        }\r",
+									"      },\r",
+									"      \"required\": [\r",
+									"        \"title\",\r",
+									"        \"slug\",\r",
+									"        \"body\",\r",
+									"        \"description\",\r",
+									"        \"createdAt\",\r",
+									"        \"updatedAt\",\r",
+									"        \"tagList\",\r",
+									"        \"favoritesCount\",\r",
+									"        \"favorited\",\r",
+									"        \"author\"\r",
+									"      ]\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"article\"\r",
+									"  ]\r",
+									"}\r",
+									"pm.test(\"Validation schema\", () => {\r",
+									"    pm.response.to.have.jsonSchema(schema);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.realworld.io/api/articles/El-universo-9532",
+							"protocol": "https",
+							"host": [
+								"api",
+								"realworld",
+								"io"
+							],
+							"path": [
+								"api",
+								"articles",
+								"El-universo-9532"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Post",
+			"item": [
+				{
+					"name": "LoginUsuario",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"postman.setEnvironmentVariable(\"Token\",  JSON.parse(responseBody).user.token);\r",
+									"\r",
+									"if ( pm.response.code === 200) {\r",
+									"    pm.test(\"Status code is 200\", function () {\r",
+									"        pm.response.to.have.status(200);\r",
+									"    });\r",
+									"    pm.test(\"Response time is less than 250ms\", function () {\r",
+									"        pm.expect(pm.response.responseTime).to.be.below(400);\r",
+									"    });\r",
+									"} else if (pm.response.code === 403) {\r",
+									"    pm.test(\"Status code is 403\", function () {\r",
+									"        pm.response.to.have.status(403);\r",
+									"    });\r",
+									"    pm.test(\"Response time is less than 250ms\", function () {\r",
+									"        pm.expect(pm.response.responseTime).to.be.below(400);\r",
+									"    });\r",
+									"}\r",
+									"\r",
+									"// Comprobar status\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// verificar variable de entorno que se esta usando\r",
+									"pm.test(\"Check the active environment\", () => {\r",
+									"  pm.expect(pm.environment.name).to.eql(\"Entorno Q-Vision\");\r",
+									"});\r",
+									"\r",
+									"// verificar que este vacio\r",
+									"pm.test(\"Check_properties\" , () =>  {\r",
+									"    pm.expect(jsonData.article).to.be.empty;\r",
+									"});\r",
+									"\r",
+									"// Verificar que tenga el parametro asignado en el headers\r",
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"});\r",
+									"\r",
+									"// Muestra el tiempo de respuesta del servior\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(300);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"user\":{\"email\":\"luffy@gmail.com\",\"password\":\"todomelo\"}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.realworld.io/api/users/login",
+							"protocol": "https",
+							"host": [
+								"api",
+								"realworld",
+								"io"
+							],
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreacioArticulo",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const TOKEN = pm.environment.get('Token');\r",
+									"const SLUG = pm.environment.get('slug');\r",
+									"const CREATED = pm.environment.get('CREATED');\r",
+									"\r",
+									"\r",
+									"if (CREATED === 'true') {\r",
+									"    pm.sendRequest({\r",
+									"        url: `https://api.realworld.io/api/articles/${SLUG}`,\r",
+									"        method: 'DELETE',\r",
+									"        header: {\r",
+									"            'Authorization': `Bearer ${TOKEN}`\r",
+									"        }\r",
+									"    })\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//postman.setEnvironmentVariable(\"slug\", JSON.parse(responseBody).article.slug);\r",
+									"\r",
+									"var CREATED = pm.environment.get('CREATED');\r",
+									"if (CREATED === 'true'){\r",
+									"    postman.setEnvironmentVariable(\"slug\",  JSON.parse(responseBody).article.slug);\r",
+									"    pm.test(\"Status code is 200\", function () {\r",
+									"        pm.response.to.have.status(200);\r",
+									"    });\r",
+									"} else {\r",
+									"    pm.test(\"Status code is 422\", function () {\r",
+									"        pm.response.to.have.status(422);\r",
+									"    });\r",
+									"}\r",
+									"\r",
+									"// Comprobar status\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Muestra el tiempo de respuesta del servior\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(250);\r",
+									"});\r",
+									"\r",
+									"// Comprobar texto en el JSON\r",
+									"pm.test(\"ChekDESCRIPCION\", function(){\r",
+									"    var response = pm.response.json();\r",
+									"    pm.expect(response.article.description).to.eql('bien o que');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"Created\");\r",
+									"});\r",
+									"\r",
+									"// Comprobar si el codigo es un Json\r",
+									"pm.test(\"Your test name\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"article\":{\"tagList\":[],\"title\":\"que mas\",\"description\":\"bien o que\",\"body\":\"todo bien\"}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.realworld.io/api/articles/",
+							"protocol": "https",
+							"host": [
+								"api",
+								"realworld",
+								"io"
+							],
+							"path": [
+								"api",
+								"articles",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SingupUsuario",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"user\":{\"email\":\"roberto2@gmail.com\",\"password\":\"quemas123\",\"username\":\"roverto2\"}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.realworld.io/api/users",
+							"protocol": "https",
+							"host": [
+								"api",
+								"realworld",
+								"io"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validacion esquema articulo favorito",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var schema =\r",
+									"{\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"article\": {\r",
+									"      \"type\": \"object\",\r",
+									"      \"properties\": {\r",
+									"        \"id\": {\r",
+									"          \"type\": \"integer\"\r",
+									"        },\r",
+									"        \"slug\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"title\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"description\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"body\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"createdAt\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"updatedAt\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"authorId\": {\r",
+									"          \"type\": \"integer\"\r",
+									"        },\r",
+									"        \"tagList\": {\r",
+									"          \"type\": \"array\"\r",
+									"        },\r",
+									"        \"author\": {\r",
+									"          \"type\": \"object\",\r",
+									"          \"properties\": {\r",
+									"            \"username\": {\r",
+									"              \"type\": \"string\"\r",
+									"            },\r",
+									"            \"bio\": {\r",
+									"              \"type\": \"null\"\r",
+									"            },\r",
+									"            \"image\": {\r",
+									"              \"type\": \"string\"\r",
+									"            },\r",
+									"            \"following\": {\r",
+									"              \"type\": \"boolean\"\r",
+									"            }\r",
+									"          },\r",
+									"          \"required\": [\r",
+									"            \"username\",\r",
+									"            \"bio\",\r",
+									"            \"image\",\r",
+									"            \"following\"\r",
+									"          ]\r",
+									"        },\r",
+									"        \"favoritedBy\": {\r",
+									"          \"type\": \"array\",\r",
+									"          \"items\": [\r",
+									"            {\r",
+									"              \"type\": \"object\",\r",
+									"              \"properties\": {\r",
+									"                \"id\": {\r",
+									"                  \"type\": \"integer\"\r",
+									"                },\r",
+									"                \"email\": {\r",
+									"                  \"type\": \"string\"\r",
+									"                },\r",
+									"                \"username\": {\r",
+									"                  \"type\": \"string\"\r",
+									"                },\r",
+									"                \"password\": {\r",
+									"                  \"type\": \"string\"\r",
+									"                },\r",
+									"                \"image\": {\r",
+									"                  \"type\": \"string\"\r",
+									"                },\r",
+									"                \"bio\": {\r",
+									"                  \"type\": \"null\"\r",
+									"                },\r",
+									"                \"demo\": {\r",
+									"                  \"type\": \"boolean\"\r",
+									"                }\r",
+									"              },\r",
+									"              \"required\": [\r",
+									"                \"id\",\r",
+									"                \"email\",\r",
+									"                \"username\",\r",
+									"                \"password\",\r",
+									"                \"image\",\r",
+									"                \"bio\",\r",
+									"                \"demo\"\r",
+									"              ]\r",
+									"            }\r",
+									"          ]\r",
+									"        },\r",
+									"        \"favorited\": {\r",
+									"          \"type\": \"boolean\"\r",
+									"        },\r",
+									"        \"favoritesCount\": {\r",
+									"          \"type\": \"integer\"\r",
+									"        }\r",
+									"      },\r",
+									"      \"required\": [\r",
+									"        \"id\",\r",
+									"        \"slug\",\r",
+									"        \"title\",\r",
+									"        \"description\",\r",
+									"        \"body\",\r",
+									"        \"createdAt\",\r",
+									"        \"updatedAt\",\r",
+									"        \"authorId\",\r",
+									"        \"tagList\",\r",
+									"        \"author\",\r",
+									"        \"favoritedBy\",\r",
+									"        \"favorited\",\r",
+									"        \"favoritesCount\"\r",
+									"      ]\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"article\"\r",
+									"  ]\r",
+									"}\r",
+									"pm.test(\"Validation schema\", () => {\r",
+									"    pm.response.to.have.jsonSchema(schema);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.realworld.io/api/articles/Quence-9532/favorite",
+							"protocol": "https",
+							"host": [
+								"api",
+								"realworld",
+								"io"
+							],
+							"path": [
+								"api",
+								"articles",
+								"Quence-9532",
+								"favorite"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Put",
+			"item": [
+				{
+					"name": "EdicionArticulo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.responseTime < 150){\r",
+									"    // Comprobar texto en el JSON\r",
+									"pm.test(\"CheckUSERNAME\", function(){\r",
+									"    var response = pm.response.json();\r",
+									"    pm.expect(response.article.body).to.eql('Tienes la tinta hasta el cuello');\r",
+									"});  \r",
+									"} else {\r",
+									"   // Comprobar texto en el JSON\r",
+									"pm.test(\"CheckFOLLOWING\", function(){\r",
+									"    var response = pm.response.json();\r",
+									"    pm.expect(response.article.favorited).to.eql(false);\r",
+									"});  \r",
+									"}\r",
+									"\r",
+									"// Comprobar status\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// para enviar una solicitud  a traves de la zona de pruebas\r",
+									"pm.sendRequest(\"https://postman-echo.com/get\", function (err, response) {\r",
+									"    console.log(response.json());\r",
+									"});\r",
+									"\r",
+									"// Par mirar si tiene cookies\r",
+									"pm.test(\"Cookie JSESSIONID is present\", () => {\r",
+									"  pm.expect(pm.cookies.has('JSESSIONID')).to.be.true;\r",
+									"});\r",
+									"\r",
+									"// Comprueba cualquier de los estados que se le asignen al array\r",
+									"pm.test(\"Check\", function(){\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,204,422]);\r",
+									"});\r",
+									"\r",
+									"// Comprobar texto en el JSON\r",
+									"pm.test(\"ChekSLUG\", function(){\r",
+									"    var response = pm.response.json();\r",
+									"    pm.expect(response.article.slug).to.eql(\"La-vida-es-bella-9280\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"article\":{\r\n        \"title\":\"Barras\",\r\n        \"slug\":\"Barras-9532\",\r\n        \"body\":\"Tienes la tinta hasta el cuello\",\r\n        \"description\":\"Barras, pensalas\",\r\n        \"createdAt\":\"2022-01-11T15:55:17.843Z\",\r\n        \"updatedAt\":\"2022-01-11T15:55:17.843Z\",\r\n        \"tagList\":[],\r\n        \"favoritesCount\":0,\r\n        \"favorited\":false,\r\n        \"author\":{\r\n            \"username\":\"Aczino\",\r\n            \"bio\":null,\r\n            \"image\":\"https://api.realworld.io/images/smiley-cyrus.jpeg\",\r\n            \"followedBy\":[],\r\n            \"following\":false\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.realworld.io/api/articles/Barras-9532",
+							"protocol": "https",
+							"host": [
+								"api",
+								"realworld",
+								"io"
+							],
+							"path": [
+								"api",
+								"articles",
+								"Barras-9532"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CambiarNombreUsuario",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Comprobar status\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// Muestra el tiempo de respuesta del servior\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"// Comprobar texto en el JSON\r",
+									"pm.test(\"CheckUsername\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.user.username).to.eql('Aczino');\r",
+									"});\r",
+									"\r",
+									"// verificar variable de entorno que se esta usando\r",
+									"pm.test(\"Check the active environment\", () => {\r",
+									"  pm.expect(pm.environment.name).to.eql(\"Entorno Q-Vision\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"Created\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"user\":{\"email\":\"luffy@gmail.com\",\"username\":\"Aczino\",\"bio\":null,\"image\":\"https://api.realworld.io/images/smiley-cyrus.jpeg\",\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1ZmZ5QGdtYWlsLmNvbSIsInVzZXJuYW1lIjoiTHVmZnkiLCJiaW8iOm51bGwsImltYWdlIjoiaHR0cHM6Ly9hcGkucmVhbHdvcmxkLmlvL2ltYWdlcy9zbWlsZXktY3lydXMuanBlZyIsImlhdCI6MTY0MTkxNDA3NiwiZXhwIjoxNjQ3MDk4MDc2fQ.1ihrulPuNJD7FjF4CmbUiysDx4Qxu_7eTYuo-mSd8ik\",\"password\":\"\"}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Url}}/api/user",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Delete",
+			"item": [
+				{
+					"name": "BorrarArticulo",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const TOKEN = pm.environment.get('Token');\r",
+									"const CREATED = pm.environment.get('CREATED');\r",
+									"\r",
+									"if (CREATED === 'true') {\r",
+									"    pm.sendRequest({\r",
+									"    url: 'https://api.realworld.io/api/articles/',\r",
+									"    method: 'POST',\r",
+									"    header: {\r",
+									"    'Content-Type': 'application/json',\r",
+									"    'Authorization': `Bearer ${TOKEN}`\r",
+									"    },\r",
+									"\r",
+									"    body: {\r",
+									"        mode: 'raw',\r",
+									"        raw: JSON.stringify({\"article\":{\"tagList\":[],\"title\":\"que mas\",\"description\":\"bien o que\",\"body\":\"todo bien\"}})\r",
+									"    }//, function(err, reponse) { \r",
+									"        //var data = reponse.json();\r",
+									"        //console.log(reponse);\r",
+									"        //pm.setEnvironmentVariable(\"slug\", data.article.slug);\r",
+									"       // }\r",
+									"})\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var CREATED = pm.environment.get('CREATED');\r",
+									"if (CREATED === 'true'){\r",
+									"    //postman.setEnvironmentVariable(\"slug\",  JSON.parse(responseBody).article.slug);\r",
+									"    pm.test(\"Status code is 200\", function () {\r",
+									"        pm.response.to.have.status(204);\r",
+									"    });\r",
+									"} else {\r",
+									"    pm.test(\"Status code is 422\", function () {\r",
+									"        pm.response.to.have.status(404);\r",
+									"    });\r",
+									"}\r",
+									"\r",
+									"// Comprobar status\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"// Muestra el tiempo de respuesta del servior\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"// Comprobar si el codigo es un String\r",
+									"pm.test(\"Body is correct\", function () {\r",
+									"    pm.response.to.have.body(\"response_body_string\");\r",
+									"});\r",
+									"\r",
+									"// Comprobar si el codigo es un Json\r",
+									"pm.test(\"Your test name\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"Created\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{Url}}/api/articles/{{slug}}",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"api",
+								"articles",
+								"{{slug}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "BorrarFavoritos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Comprobar status\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"// Comprueba cualquier de los estados que se le asignen al array\r",
+									"pm.test(\"Check\", function(){\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,404,422]);\r",
+									"});\r",
+									"\r",
+									"// Par mirar si tiene cookies\r",
+									"pm.test(\"Cookie JSESSIONID is present\", () => {\r",
+									"  pm.expect(pm.cookies.has('JSESSIONID')).to.be.true;\r",
+									"});\r",
+									"\r",
+									"// Verificar que tenga el parametro asignado en el headers\r",
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"});\r",
+									"\r",
+									"// Comprobar si el codigo es un Json\r",
+									"pm.test(\"Your test name\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://api.realworld.io/api/articles/Barras-9532/favorite",
+							"protocol": "https",
+							"host": [
+								"api",
+								"realworld",
+								"io"
+							],
+							"path": [
+								"api",
+								"articles",
+								"Barras-9532",
+								"favorite"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

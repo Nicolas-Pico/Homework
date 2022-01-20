@@ -15,7 +15,6 @@ Feature: Favorite articles
         Then status 200
 
         # Step 2: Obtener el slug del primer articulo (preguntar a johan)
-        # * print slugFinal
         * def callFavorites = response.articles[0].favoritesCount
         * if (response.articles[0].favoritesCount == 1) karate.call('deleteFavorite.feature')
 

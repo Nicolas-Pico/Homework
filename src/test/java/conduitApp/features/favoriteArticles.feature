@@ -3,6 +3,8 @@ Feature: Favorite articles
         Given url apiUrl
         * def tokenResponse = call read('classpath:helpers/createToken.feature')
         * def token = tokenResponse.authToken
+        * def slugFav = callonce read('classpath:helpers/capturaSlug.feature')
+        * def slugFinal = slugFav.slugFinal
 
     Scenario: get all articles of the global feed
         # Step 1: Obtener los articulos de la global feed
@@ -13,12 +15,12 @@ Feature: Favorite articles
         Then status 200
 
         # Step 2: Obtener el slug del primer articulo (preguntar a johan)
-        * def slug = response.articles[0].slug
+        # * print slugFinal
         * def callFavorites = response.articles[0].favoritesCount
         * if (response.articles[0].favoritesCount == 1) karate.call('deleteFavorite.feature')
 
         # Step 3: Realizar un post para dar favoritos
-        Given path 'articles/' + slug + '/favorite'
+        Given path 'articles/' + slugFinal + '/favorite'
         And header Authorization = 'Token ' + token
         When method Post
         Then status 200
@@ -93,8 +95,7 @@ Feature: Favorite articles
             }
             """
         # Step 8: Verifique que la ID de slug del Paso 2 exista en uno de los artículos favoritos
-        And match response.articles[*].slug contains slug
-        * print response
+        And match response.articles[*].slug contains slugFinal
 
 
     Scenario: Comment articles
@@ -105,12 +106,10 @@ Feature: Favorite articles
         When method Get
         Then status 200
 
-        # Step 2: Obtener los articulos de la global feed
-        * def slug = response.articles[0].slug
-        * print slug
+        # Step 2: Obtenga la ID de slug para el primer articulo, guárdela en variable
 
         # Step 3: Obtener todos los comentarios del articulo
-        Given path 'articles/' + slug + '/comments'
+        Given path 'articles/' + slugFinal + '/comments'
         And header Authorization = 'Token ' + token
         When method Get
         Then status 200
@@ -138,7 +137,7 @@ Feature: Favorite articles
         * def cometariosCount = responseWithComments.length
 
         # Step 6: Haz una solicitud POST para publicar un nuevo comentario
-        Given path 'articles/' + slug + '/comments'
+        Given path 'articles/' + slugFinal + '/comments'
         And header Authorization = 'Token ' + token
         And request
             """
@@ -170,7 +169,7 @@ Feature: Favorite articles
             """
 
         # Step 8: Obtenga la lista de todos los comentarios de este artículo una vez más
-        Given path 'articles/' + slug + '/comments'
+        Given path 'articles/' + slugFinal + '/comments'
         And header Authorization = 'Token ' + token
         When method Get
         Then status 200
@@ -179,19 +178,15 @@ Feature: Favorite articles
         # Step 9: Verifique el número de comentarios aumentado en 1 (similar a lo que hicimos con los recuentos de favoritos)
         * def commentCount = response.comments.length
         And match commentCount == cometariosCount + 1
-        * print commentCount
         
         # Step 10: Hacer una solicitud DELETE para eliminar el comentario
-        Given path 'articles/' + slug + '/comments/' + commentId
+        Given path 'articles/' + slugFinal + '/comments/' + commentId
         And header Authorization = 'Token ' + token
         When method Delete
         Then status 204
         
         # Step 11: Obtenga todos los comentarios nuevamente y verifique que el número de comentarios disminuyó en 1
-        Given path 'articles/' + slug + '/comments'
+        Given path 'articles/' + slugFinal + '/comments'
         And header Authorization = 'Token ' + token
         When method Get
         Then status 200
-
-
-

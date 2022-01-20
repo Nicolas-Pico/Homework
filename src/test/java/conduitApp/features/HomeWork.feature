@@ -3,7 +3,7 @@ Feature: Favorite articles
         Given url apiUrl
         * def tokenResponse = call read('classpath:helpers/createToken.feature')
         * def token = tokenResponse.authToken
-        * def slugFav = callonce read('classpath:helpers/capturaSlug.feature')
+        * def slugFav = callonce read('classpath:helpers/captureSlug.feature')
         * def slugFinal = slugFav.slugFinal
 
     Scenario: get all articles of the global feed
@@ -172,7 +172,7 @@ Feature: Favorite articles
         And header Authorization = 'Token ' + token
         When method Get
         Then status 200
-        * def commentId = response.comments[3].id
+        * def commentId = response.comments[2].id
 
         # Step 9: Verifique el número de comentarios aumentado en 1 (similar a lo que hicimos con los recuentos de favoritos)
         * def commentCount = response.comments.length
@@ -189,3 +189,6 @@ Feature: Favorite articles
         And header Authorization = 'Token ' + token
         When method Get
         Then status 200
+        * def commentsFinal = response
+        * def commentsFinal = commentsFinal.comments.length
+        And match commentsFinal == commentCount - 1     

@@ -1,7 +1,6 @@
 package com.co.swaglabs.runners;
 
 import cucumber.api.CucumberOptions;
-/*import io.cucumber.junit.CucumberOptions;*/
 import cucumber.api.SnippetType;
 import net.serenitybdd.cucumber.CucumberWithSerenity;
 import org.junit.runner.RunWith;

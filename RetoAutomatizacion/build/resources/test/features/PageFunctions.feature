@@ -4,4 +4,4 @@ Feature: I as a user of SWAGLABS
   Scenario: Check funtions
     Given Andrey is on the SWAGLABS page
     When  Andrey wants to check that page is working
-    Then user cheks that the page works well
+    Then user cheks that the page works well and sees a message DEVELOP WITH CONFIDENCE

@@ -1,13 +1,13 @@
 defaultTasks 'clean'
-version '1.0-SNAPSHOT'
-tasks.withType(JavaCompile){ options.encoding = 'UTF-8' }
-group 'org.example'
+version '1.0-SNAPSHOT' // Indica la version con la que estamos trabajando una versión del proyecto que está en tiempo de desarrollo.
+tasks.withType(JavaCompile){ options.encoding = 'UTF-8' } //Reconoce caracteres especiales
+group 'org.example' // Grupo que uno crea a la hora de empezar un proyecto
 
 repositories {
-    mavenCentral()
+    mavenCentral() // Donde vamos a sacar los repositorios
 }
 
-buildscript {
+buildscript { //Se gestionan las dependencias para los plugins
     repositories {
         mavenCentral()
     }
@@ -17,14 +17,14 @@ buildscript {
     }
 }
 
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'eclipse'
-apply plugin: 'net.serenity-bdd.aggregator'
+apply plugin: 'java' // Para que funcione con el lenguaje java
+apply plugin: 'idea' // Para que funcione con la carpeta idea
+apply plugin: 'eclipse' // Para que funcione con eclipse (si quiero cambiar el protecto a este IDE)
+apply plugin: 'net.serenity-bdd.aggregator' // Herramienta para hacer los reportes
 
 
 
-serenity {
+serenity { // Para los reportes de Serenity
     reports = ["single-page-html"]
 }
 
@@ -32,17 +32,18 @@ serenity {
 
 dependencies {
     //implementation 'net.serenity-bdd:serenity-core:2.0.81'
-    implementation 'net.serenity-bdd:serenity-core:2.0.81'
-    implementation 'net.serenity-bdd:serenity-junit:2.0.81'
-    implementation 'net.serenity-bdd:serenity-cucumber:1.9.45'
-    implementation 'net.serenity-bdd:serenity-screenplay:2.0.81'
-    implementation 'org.hamcrest:hamcrest-all:1.3'
-    implementation 'junit:junit:4.12'
-    implementation 'org.assertj:assertj-core:3.12.2'
-    implementation 'org.slf4j:slf4j-simple:1.7.26'
+    implementation 'net.serenity-bdd:serenity-core:2.0.81' // Contiene abstracciones e implementaciones para algunas características básicas de Serenity como autorización, almacenamiento en caché, localización, resolución de dependencia, reflexión
+    implementation 'net.serenity-bdd:serenity-junit:2.0.81' // Permite correr Serenity
+    implementation 'net.serenity-bdd:serenity-cucumber:1.9.45' // Permite integrar cucumber con Serenity
+    implementation 'net.serenity-bdd:serenity-screenplay:2.0.81' // Permite trabajar con Screenplay
+    implementation 'org.hamcrest:hamcrest-all:1.3' // Para hacer comparaciones (asserts, matchers)
+    implementation 'junit:junit:4.12' // Marco de pruebas unitarias para Java
+    implementation 'org.assertj:assertj-core:3.12.2' // Aserciones ricas y fluidas para probar Java
+    implementation 'org.slf4j:slf4j-simple:1.7.26' // Abstracción simple para varios frameworks de logging
     implementation group: 'net.serenity-bdd', name: 'serenity-screenplay-webdriver', version: '2.0.52'
     implementation group: 'net.serenity-bdd', name: 'serenity-cucumber', version: '1.9.39'
     implementation group: 'org.jvnet.com4j', name: 'com4j', version: '2.1'
-    implementation group: 'com.codoid.products', name: 'fillo', version: '1.21'
-    implementation group: 'io.appium', name: 'java-client', version: '4.1.2'
+    implementation group: 'com.codoid.products', name: 'fillo', version: '1.21' // Para leer archivos excel
+    implementation group: 'io.appium', name: 'java-client', version: '4.1.2' // Para programacion movil
 }
+

@@ -1,5 +1,6 @@
 package com.co.swaglabs.stepdefinitions;
 
+import com.co.swaglabs.questions.ValidateMessageAboutQuestions;
 import com.co.swaglabs.questions.ValidateMessageQuestions;
 import com.co.swaglabs.tasks.CheckFuntionsTasks;
 import com.co.swaglabs.tasks.ShoppingCartTasks;
@@ -33,8 +34,8 @@ public class CheckFuntionsStepdefinitions {
         theActorInTheSpotlight().attemptsTo(CheckFuntionsTasks.funtionsTask());
     }
 
-    @Then("^user cheks that the page works well$")
-    public void userCheksThatThePageWorksWell() {
-
+    @Then("^user cheks that the page works well and sees a message (.*)$")
+    public void userCheksThatThePageWorksWell(String word) {
+        OnStage.theActorInTheSpotlight().should(GivenWhenThen.seeThat(ValidateMessageAboutQuestions.match(), Matchers.is(Matchers.equalTo(word))));
     }
 }
